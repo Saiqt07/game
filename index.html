@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Memory Garden</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/video-modal.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts - Using a readable font -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Main Menu Screen -->
+        <div id="main-menu-screen" class="screen active">
+            <div class="welcome-header">
+                <div class="accessibility-controls">
+                    <button id="text-size-increase" aria-label="Increase Text Size">
+                        <i class="fas fa-text-height"></i>+
+                    </button>
+                    <button id="high-contrast-toggle" aria-label="Toggle High Contrast">
+                        <i class="fas fa-adjust"></i>
+                    </button>
+                    <button id="audio-toggle" aria-label="Toggle Audio">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="logo-container">
+                <h1>Memory Garden</h1>
+                <img src="Logo/logo.jpg" alt="Memory Garden Logo" id="game-logo">
+                <p class="tagline">Exercise your mind while growing a beautiful garden</p>
+            </div>
+            
+            <div class="welcome-description">
+                <div class="description-card">
+                    <i class="fas fa-brain description-icon"></i>
+                    <h3>Improve Memory</h3>
+                    <p>Enhance your memory skills through fun and engaging activities</p>
+                </div>
+                <div class="description-card">
+                    <i class="fas fa-seedling description-icon"></i>
+                    <h3>Grow Your Garden</h3>
+                    <p>Plant beautiful flowers and watch your garden flourish</p>
+                </div>
+                <div class="description-card">
+                    <i class="fas fa-book description-icon"></i>
+                    <h3>Unlock Stories</h3>
+                    <p>Discover delightful stories as you progress through levels</p>
+                </div>
+            </div>
+            
+            <div class="main-menu-buttons">
+                <button id="play-button" class="large-button pulse-animation">
+                    <i class="fas fa-play"></i> Play Game
+                </button>
+                <button id="storybook-button" class="large-button">
+                    <i class="fas fa-book-open"></i> Storybook
+                </button>
+                <button id="settings-button" class="large-button">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <button id="help-button" class="large-button">
+                    <i class="fas fa-question-circle"></i> Help
+                </button>
+                <button id="exit-button" class="large-button">
+                    <i class="fas fa-sign-out-alt"></i> Exit
+                </button>
+            </div>
+            
+            <div class="welcome-footer">
+                <p>Designed for players of all ages</p>
+                <p class="version">Version 1.0</p>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="player-info">
+                    <span id="player-name">Player</span>
+                    <div class="stars-container">
+                        <i class="fas fa-star"></i>
+                        <span id="stars-count">0</span>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="game-settings-button" class="control-button" aria-label="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button id="home-button" class="control-button" aria-label="Return to Main Menu">
+                        <i class="fas fa-home"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <div class="side-panel">
+                    <button id="hint-button" class="side-button" aria-label="Get a Hint">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Hint</span>
+                    </button>
+                    <button id="undo-button" class="side-button" aria-label="Undo Last Action">
+                        <i class="fas fa-undo"></i>
+                        <span>Undo</span>
+                    </button>
+                </div>
+
+                <div id="garden-grid" class="garden-container">
+                    <!-- Garden grid will be generated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="feedback-area" id="feedback-message">
+                <!-- Feedback messages will appear here -->
+            </div>
+
+            <div class="flower-selection">
+                <h3>Select a Flower</h3>
+                <div class="flower-scroll">
+                    <!-- Flower options will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Storybook Screen -->
+        <div id="storybook-screen" class="screen">
+            <div class="screen-header">
+                <h2>Storybook</h2>
+                <button id="storybook-home-button" class="back-button" aria-label="Return to Main Menu">
+                    <i class="fas fa-home"></i> Main Menu
+                </button>
+            </div>
+            
+            <div class="storybook-content">
+                <div class="stories-list">
+                    <h3>Your Stories</h3>
+                    <div class="story-items">
+                        <div class="story-item unlocked">
+                            <img src="images/stories/story1.png" alt="The Garden Begins" class="story-thumbnail">
+                            <div class="story-info">
+                                <h4>The Garden Begins</h4>
+                                <p>The story of how your garden started...</p>
+                            </div>
+                        </div>
+                        <div class="story-item locked">
+                            <img src="images/stories/story2.png" alt="The Magical Flower" class="story-thumbnail">
+                            <div class="story-info">
+                                <h4>The Magical Flower</h4>
+                                <p>Complete Level 2 to unlock</p>
+                            </div>
+                            <div class="lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                        <div class="story-item locked">
+                            <img src="images/stories/story3.png" alt="Garden Friends" class="story-thumbnail">
+                            <div class="story-info">
+                                <h4>Garden Friends</h4>
+                                <p>Complete Level 3 to unlock</p>
+                            </div>
+                            <div class="lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-reader">
+                    <div class="story-controls">
+                        <button id="play-narration" class="story-button">
+                            <i class="fas fa-volume-up"></i> Play Narration
+                        </button>
+                        <button id="pause-narration" class="story-button">
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                    </div>
+                    <div class="story-text">
+                        <h3 id="story-title">The Garden Begins</h3>
+                        <div id="story-content">
+                            <p>Once upon a time, there was a beautiful garden that needed care and attention...</p>
+                            <p>The flowers were waiting for someone special to help them grow and bloom...</p>
+                            <p>That special person was you!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings-screen" class="screen">
+            <div class="screen-header">
+                <h2>Settings</h2>
+                <button id="settings-home-button" class="back-button" aria-label="Return to Main Menu">
+                    <i class="fas fa-home"></i> Main Menu
+                </button>
+            </div>
+            
+            <div class="settings-options">
+                <div class="setting-item">
+                    <label for="volume-slider">Volume</label>
+                    <input type="range" id="volume-slider" min="0" max="10" value="7" class="slider">
+                    <div class="slider-labels">
+                        <span>Off</span>
+                        <span>Medium</span>
+                        <span>Loud</span>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <label for="text-size-slider">Text Size</label>
+                    <input type="range" id="text-size-slider" min="1" max="3" value="2" class="slider">
+                    <div class="slider-labels">
+                        <span>Small</span>
+                        <span>Medium</span>
+                        <span>Large</span>
+                    </div>
+                </div>
+                
+                <div class="setting-item toggle">
+                    <label for="voice-guidance-setting">Voice Guidance</label>
+                    <label class="switch">
+                        <input type="checkbox" id="voice-guidance-setting" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item toggle">
+                    <label for="high-contrast-setting">High Contrast Mode</label>
+                    <label class="switch">
+                        <input type="checkbox" id="high-contrast-setting">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item toggle">
+                    <label for="simplified-mode-setting">Simplified Mode</label>
+                    <label class="switch">
+                        <input type="checkbox" id="simplified-mode-setting">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <button id="save-settings" class="large-button">
+                <i class="fas fa-save"></i> Save Settings
+            </button>
+        </div>
+
+        <!-- Help Screen -->
+        <div id="help-screen" class="screen">
+            <div class="screen-header">
+                <h2>How to Play</h2>
+                <button id="help-home-button" class="back-button" aria-label="Return to Main Menu">
+                    <i class="fas fa-home"></i> Main Menu
+                </button>
+            </div>
+            
+            <div class="help-content">
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <img src="images/Tutorials/tuts-image (1).png" alt="Watch the pattern" class="tutorial-image">
+                        <div class="step-description">
+                            <h3>Step 1: Watch</h3>
+                            <p>Watch the pattern of flowers shown on the screen.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <img src="images/Tutorials/tuts-image (2).png" alt="Remember the pattern" class="tutorial-image">
+                        <div class="step-description">
+                            <h3>Step 2: Remember</h3>
+                            <p>Try to remember where each flower was placed.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <img src="images/Tutorials/tuts-image (3).png" alt="Recreate the pattern" class="tutorial-image">
+                        <div class="step-description">
+                            <h3>Step 3: Recreate</h3>
+                            <p>Select flowers and place them in the garden to recreate the pattern.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="help-buttons">
+                    <button id="replay-tutorial" class="help-button">
+                        <i class="fas fa-play"></i> Watch Tutorial
+                    </button>
+                    <button id="contact-support" class="help-button">
+                        <i class="fas fa-envelope"></i> Contact Support
+                    </button>
+                </div>
+                
+                <div class="support-info">
+                    <h3>Need Help?</h3>
+                    <p>Email us at: <a href="mailto:support@memorygarden.com">support@memorygarden.com</a></p>
+                    <p>Or call: (555) 123-4567</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="level-complete-modal" class="modal">
+            <div class="modal-content">
+                <h2>Level Complete!</h2>
+                <div class="stars-earned">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>You've earned <span id="stars-earned">3</span> stars!</p>
+                <div class="story-unlock">
+                    <p>You've unlocked a new story!</p>
+                    <button id="read-story-button" class="modal-button">
+                        <i class="fas fa-book-open"></i> Read Story
+                    </button>
+                </div>
+                <div class="modal-buttons">
+                    <button id="next-level-button" class="modal-button">
+                        <i class="fas fa-arrow-right"></i> Next Level
+                    </button>
+                    <button id="replay-level-button" class="modal-button">
+                        <i class="fas fa-redo"></i> Play Again
+                    </button>
+                    <button id="modal-home-button" class="modal-button">
+                        <i class="fas fa-home"></i> Main Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="instructions-modal" class="modal">
+            <div class="modal-content">
+                <h2>Instructions</h2>
+                <p class="instruction-text">Remember the pattern of flowers shown, then recreate it in your garden.</p>
+                <p class="instruction-text">Use the "Hint" button if you need help remembering.</p>
+                <button id="close-instructions" class="modal-button">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+        
+        <div id="exit-confirmation-modal" class="modal">
+            <div class="modal-content">
+                <h2>Exit Game?</h2>
+                <p>Are you sure you want to exit Memory Garden?</p>
+                <div class="modal-buttons">
+                    <button id="confirm-exit" class="modal-button">
+                        <i class="fas fa-check"></i> Yes, Exit
+                    </button>
+                    <button id="cancel-exit" class="modal-button">
+                        <i class="fas fa-times"></i> No, Continue Playing
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="background-music" loop>
+        <source src="audio/Autumn Leaves (instrumental).mp3" type="audio/mpeg">
+    </audio>
+    <audio id="success-sound">
+        <source src="audio/success.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="error-sound">
+        <source src="audio/error.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="narration">
+        <source src="audio/story-narration.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

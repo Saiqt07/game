@@ -1,0 +1,48 @@
+/* Video Modal Specific Styles */
+#video-modal .modal-content {
+    width: 90%;
+    max-width: 700px; /* Increased max-width for video content */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* For proper positioning of elements */
+}
+
+#video-modal video {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#video-modal .modal-button {
+    margin-top: 15px;
+}
+
+/* Error message styling */
+#video-modal .error-message {
+    color: #d32f2f;
+    background-color: #ffebee;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+    max-width: 640px;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #video-modal .modal-content {
+        padding: 15px;
+    }
+    
+    #video-modal video {
+        max-width: 100%;
+        height: auto;
+    }
+}

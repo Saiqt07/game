@@ -1,0 +1,35 @@
+/* Level System Styles */
+
+/* Game Completion Message */
+#game-completion-message {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.completion-text {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/* Level indicator in instructions */
+.level-indicator {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Animation for level completion */
+@keyframes celebration {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+#game-completion-message {
+    animation: celebration 1s ease-in-out infinite;
+}

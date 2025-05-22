@@ -6,6 +6,7 @@
     <title>Memory Garden</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/video-modal.css">
+    <link rel="stylesheet" href="css/level-system.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts - Using a readable font -->
@@ -139,7 +140,7 @@
                 <div class="stories-list">
                     <h3>Your Stories</h3>
                     <div class="story-items">
-                        <div class="story-item unlocked">
+                        <div class="story-item unlocked" style="border: 2px solid #ffc107;">
                             <img src="images/stories/story1.png" alt="The Garden Begins" class="story-thumbnail">
                             <div class="story-info">
                                 <h4>The Garden Begins</h4>
@@ -319,6 +320,10 @@
                         <i class="fas fa-book-open"></i> Read Story
                     </button>
                 </div>
+                <div id="game-completion-message" style="display: none;">
+                    <p class="completion-text">Congratulations! You've completed all levels!</p>
+                    <p>You've mastered Memory Garden and unlocked all stories.</p>
+                </div>
                 <div class="modal-buttons">
                     <button id="next-level-button" class="modal-button">
                         <i class="fas fa-arrow-right"></i> Next Level
@@ -374,6 +379,7 @@
         <source src="audio/story-narration.mp3" type="audio/mpeg">
     </audio>
 
+    <script src="js/level-system.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ let gameState = {
     playerName: 'Player',
     stars: 0,
     currentLevel: 1,
+    maxLevel: 3, // Maximum level available in the game
     hintsRemaining: 3,
     pattern: [], // The pattern to remember
     playerPattern: [], // The player's attempt
@@ -182,7 +183,19 @@ function setupNavigationListeners() {
         console.log('Next level button clicked');
         hideModal('level-complete-modal');
         gameState.currentLevel++;
-        startNewGame();
+        
+        // Check if all levels are completed
+        if (gameState.currentLevel > gameState.maxLevel) {
+            showFeedback('Congratulations! You have completed all levels and unlocked all stories!', 'success');
+            if (gameState.voiceGuidanceEnabled) {
+                speakMessage('Congratulations! You have completed all levels and unlocked all stories!');
+            }
+            // Ensure all stories are unlocked when game is completed
+            unlockAllStories();
+            showScreen('main-menu');
+        } else {
+            startNewGame();
+        }
     });
     
     document.getElementById('replay-level-button').addEventListener('click', () => {
@@ -941,15 +954,32 @@ function checkPattern() {
             star.className = i < starsEarned ? 'fas fa-star' : 'far fa-star';
             starsContainer.appendChild(star);
         }
-        // Unlock all stories when any level is completed
-        unlockAllStories();
-        // Always show story unlock message
+        // Handle story unlocking based on level completion
+        const unlockMessage = handleLevelCompletion(gameState.currentLevel);
+        
+        // Show story unlock section
         const storyUnlock = document.querySelector('.story-unlock');
         storyUnlock.style.display = 'block';
-        // Update the message to indicate all stories are unlocked
+        
+        // Update the message based on level completion
         const storyUnlockMessage = storyUnlock.querySelector('p');
         if (storyUnlockMessage) {
-            storyUnlockMessage.textContent = 'All stories are now unlocked!';
+            storyUnlockMessage.textContent = unlockMessage;
+        }
+        
+        // If this is the final level, update the next level button text and show completion message
+        if (gameState.currentLevel >= gameState.maxLevel) {
+            const nextLevelButton = document.getElementById('next-level-button');
+            if (nextLevelButton) {
+                nextLevelButton.innerHTML = '<i class="fas fa-check"></i> Complete Game';
+            }
+            
+            // Show the game completion message
+            const completionMessage = document.getElementById('game-completion-message');
+            if (completionMessage) {
+                completionMessage.style.display = 'block';
+                completionMessage.textContent = 'Congratulations! You have completed all levels and unlocked all stories!';
+            }
         }
         // Show the modal after a short delay
         setTimeout(() => {
@@ -1170,7 +1200,12 @@ function startNewGame() {
     // Clear the garden grid
     clearGardenGrid();
     
-    // Show instructions
+    // Show instructions with level information
+    const instructionText = document.querySelector('.instruction-text');
+    if (instructionText) {
+        instructionText.textContent = `Level ${gameState.currentLevel} of ${gameState.maxLevel}: Remember the pattern of flowers shown, then recreate it in your garden.`;
+    }
+    
     showModal('instructions-modal');
     
     // Show the pattern briefly after instructions are closed
@@ -1189,7 +1224,7 @@ function startNewGame() {
     
     // Speak welcome message for the game
     if (gameState.voiceGuidanceEnabled) {
-        speakMessage(`Welcome to Memory Garden, level ${gameState.currentLevel}. Remember the pattern and recreate it.`);
+        speakMessage(`Welcome to Memory Garden, level ${gameState.currentLevel} of ${gameState.maxLevel}. Remember the pattern and recreate it.`);
     }
     
     // Update UI
@@ -1440,11 +1475,68 @@ function initializeStorybook() {
         showFeedback('Voice narration is not supported in your browser', 'error');
     }
     
+    // Reset all stories to locked state except the first one
+    resetStoryLocks();
+    
     // Set initial story
     selectStory('The Garden Begins');
     
     // Hide pause button initially
     document.getElementById('pause-narration').style.display = 'none';
+}
+
+/**
+ * Resets all stories to their initial locked state
+ * Only the first story is unlocked by default
+ */
+function resetStoryLocks() {
+    console.log('Resetting story locks');
+    
+    // Get all story items
+    const storyItems = document.querySelectorAll('.story-item');
+    
+    // Lock all stories except the first one
+    storyItems.forEach((item, index) => {
+        if (index === 0) {
+            // First story is always unlocked
+            item.classList.remove('locked');
+            item.classList.add('unlocked');
+            
+            // Hide the lock overlay if it exists
+            const lockOverlay = item.querySelector('.lock-overlay');
+            if (lockOverlay) {
+                lockOverlay.style.display = 'none';
+            }
+            
+            // Update the story info text
+            const storyInfo = item.querySelector('.story-info p');
+            if (storyInfo) {
+                storyInfo.textContent = 'Unlocked!';
+            }
+        } else {
+            // Lock all other stories
+            item.classList.remove('unlocked');
+            item.classList.add('locked');
+            
+            // Show the lock overlay
+            const lockOverlay = item.querySelector('.lock-overlay');
+            if (lockOverlay) {
+                lockOverlay.style.display = 'block';
+            }
+            
+            // Update the story info text based on which level unlocks it
+            const storyInfo = item.querySelector('.story-info p');
+            if (storyInfo) {
+                if (index === 1) {
+                    storyInfo.textContent = 'Complete Level 2 to unlock';
+                } else if (index === 2) {
+                    storyInfo.textContent = 'Complete Level 3 to unlock';
+                } else {
+                    storyInfo.textContent = 'Complete Level 3 to unlock';
+                }
+            }
+        }
+    });
 }
 
 // Function to unlock all stories in the storybook

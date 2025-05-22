@@ -140,11 +140,11 @@
                 <div class="stories-list">
                     <h3>Your Stories</h3>
                     <div class="story-items">
-                        <div class="story-item unlocked" style="border: 2px solid #ffc107;">
+                        <div class="story-item unlocked">
                             <img src="images/stories/story1.png" alt="The Garden Begins" class="story-thumbnail">
                             <div class="story-info">
                                 <h4>The Garden Begins</h4>
-                                <p>The story of how your garden started...</p>
+                                <p>Read the story below!</p>
                             </div>
                         </div>
                         <div class="story-item locked">
@@ -153,18 +153,12 @@
                                 <h4>The Magical Flower</h4>
                                 <p>Complete Level 2 to unlock</p>
                             </div>
-                            <div class="lock-overlay">
-                                <i class="fas fa-lock"></i>
-                            </div>
                         </div>
-                        <div class="story-item locked">
+                        <div class="story-item unlocked">
                             <img src="images/stories/story3.png" alt="Garden Friends" class="story-thumbnail">
                             <div class="story-info">
                                 <h4>Garden Friends</h4>
-                                <p>Complete Level 3 to unlock</p>
-                            </div>
-                            <div class="lock-overlay">
-                                <i class="fas fa-lock"></i>
+                                <p>Read the story below!</p>
                             </div>
                         </div>
                     </div>
@@ -246,9 +240,14 @@
                 </div>
             </div>
             
-            <button id="save-settings" class="large-button">
-                <i class="fas fa-save"></i> Save Settings
-            </button>
+            <div class="settings-buttons">
+                <button id="save-settings" class="large-button">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+                <button id="continue-playing" class="large-button">
+                    <i class="fas fa-gamepad"></i> Continue Playing
+                </button>
+            </div>
         </div>
 
         <!-- Help Screen -->

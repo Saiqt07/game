@@ -1233,3 +1233,153 @@ body.high-contrast .flower-option:focus {
         line-height: 1.5;
     }
 }
+
+/* Dark Mode Enhancements for Gardening, Storybook, Settings, and Help */
+.dark-mode #game-screen,
+.dark-mode #storybook-screen,
+.dark-mode #settings-screen,
+.dark-mode #help-screen {
+    background-color: #23272b;
+    color: #fff;
+}
+
+.dark-mode .garden-cell {
+    background-color: #2e3b2f;
+    color: #fff;
+}
+
+.dark-mode .flower-selection,
+.dark-mode .stories-list,
+.dark-mode .settings-options,
+.dark-mode .help-content {
+    background-color: #2a2d34;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.dark-mode .stories-list {
+    background-color: #23272b;
+    color: #ffd369;
+}
+
+.dark-mode .help-content,
+.dark-mode .tutorial-steps,
+.dark-mode .tutorial-step,
+.dark-mode .support-info {
+    background-color: #23272b;
+    color: #ffd369;
+}
+
+.dark-mode .support-info a {
+    color: #ffd369;
+}
+
+.dark-mode .help-content p {
+    color: #ffd369;
+}
+
+.dark-mode .stories-list h2,
+.dark-mode .stories-list .your-stories-header {
+    color: #ffd369;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4 {
+    color: #ffd369;
+}
+
+.dark-mode .story-reader {
+    background-color: #393e46;
+    color: #ffd369;
+}
+
+.dark-mode .flower-option {
+    background-color: #393e46;
+    color: #ffd369;
+    border: 2px solid #ffd369;
+}
+
+.dark-mode .flower-option.selected {
+    border: 3px solid #ffd369;
+}
+
+.dark-mode .story-item.unlocked {
+    background-color: #23272b;
+    border: 2px solid #ffd369;
+    color: #ffd369;
+}
+
+.dark-mode .story-item.locked {
+    background-color: #181818;
+    color: #888;
+    border: 1px solid #444;
+}
+
+
+
+.dark-mode .modal-content {
+    background-color: #23272b;
+    color: #ffd369;
+}
+
+
+.dark-mode .story-unlock,
+.dark-mode .modal-button,
+.dark-mode .back-button,
+.dark-mode .side-button {
+    background-color: #393e46;
+    color: #ffd369;
+}
+
+.dark-mode .story-info p,
+.dark-mode .completion-text {
+    color: #ffd369;
+}
+
+.dark-mode i,
+.dark-mode .fa-book-open,
+.dark-mode .fa-star {
+    color: #ffd369 !important;
+}
+
+.dark-mode .fa-book-open,
+.dark-mode .fa-volume-up {
+    color: #ffd369 !important;
+}
+
+.dark-mode .settings-options {
+    background-color: #23272b;
+    color: #ffd369;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.dark-mode .setting-item label,
+.dark-mode .slider-labels,
+.dark-mode .settings-options h2,
+.dark-mode .settings-options h3 {
+    color: #ffd369;
+}
+
+.dark-mode .slider {
+    background: #393e46;
+}
+
+.dark-mode .slider::-webkit-slider-thumb,
+.dark-mode .slider::-moz-range-thumb {
+    background: #ffd369;
+}
+
+.dark-mode .switch,
+.dark-mode .toggle-slider {
+    background-color: #393e46;
+}
+
+.dark-mode .switch input:checked + .toggle-slider {
+    background-color: #ffd369;
+}
+
+.dark-mode .feedback-area {
+    color: #ffd369;
+}

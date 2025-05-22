@@ -59,7 +59,7 @@ function unlockStory(storyNumber) {
         // Update the story info text
         const storyInfo = storyToUnlock.querySelector('.story-info p');
         if (storyInfo) {
-            storyInfo.textContent = 'Unlocked!';
+            storyInfo.textContent = 'Read the story below!';
         }
     }
 }
@@ -87,7 +87,7 @@ function unlockAllStories() {
         // Update the story info text
         const storyInfo = item.querySelector('.story-info p');
         if (storyInfo) {
-            storyInfo.textContent = 'Unlocked!';
+            storyInfo.textContent = 'Read the story below!';
         }
     });
 }

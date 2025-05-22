@@ -3,6 +3,7 @@
 // Game state variables
 let gameState = {
     currentScreen: 'main-menu',
+    previousScreen: null, // Track previous screen for Continue Playing functionality
     playerName: 'Player',
     stars: 0,
     currentLevel: 1,
@@ -263,9 +264,8 @@ function setupAccessibilityControls() {
     
     // High contrast toggle
     document.getElementById('high-contrast-toggle').addEventListener('click', () => {
-        console.log('High contrast toggle button clicked');
-        gameState.highContrastMode = !gameState.highContrastMode;
-        updateContrastMode();
+        console.log('Dark mode toggle button clicked');
+        document.body.classList.toggle('dark-mode');
     });
     
     // Audio toggle
@@ -332,6 +332,21 @@ function setupAccessibilityControls() {
             console.log('Save settings button clicked');
             showScreen('main-menu');
             showFeedback('Settings saved!', 'success');
+        });
+    }
+    
+    const continuePlayingButton = document.getElementById('continue-playing');
+    if (continuePlayingButton) {
+        continuePlayingButton.addEventListener('click', () => {
+            console.log('Continue playing button clicked');
+            // If player was previously in the game screen, return there
+            if (gameState.currentScreen === 'settings' && gameState.previousScreen === 'game') {
+                showScreen('game');
+                showFeedback('Continuing your game!', 'success');
+            } else {
+                // Otherwise go to main menu
+                showScreen('main-menu');
+            }
         });
     }
     
@@ -425,6 +440,9 @@ function updateVolume(volume) {
 
 function showScreen(screenName) {
     console.log('Showing screen:', screenName);
+    
+    // Store the previous screen before changing to the new one
+    gameState.previousScreen = gameState.currentScreen;
     
     // Hide all screens
     screens.forEach(screen => {
@@ -1511,7 +1529,7 @@ function resetStoryLocks() {
             // Update the story info text
             const storyInfo = item.querySelector('.story-info p');
             if (storyInfo) {
-                storyInfo.textContent = 'Unlocked!';
+                storyInfo.textContent = 'Read the story below!';
             }
         } else {
             // Lock all other stories
@@ -1559,8 +1577,8 @@ function unlockAllStories() {
         
         // Update the story info text
         const storyInfo = item.querySelector('.story-info p');
-        if (storyInfo && storyInfo.textContent.includes('Earn')) {
-            storyInfo.textContent = 'Unlocked!';
+        if (storyInfo) {
+            storyInfo.textContent = 'Read the story below!';
         }
     });
 }

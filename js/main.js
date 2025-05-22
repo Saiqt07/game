@@ -214,6 +214,11 @@ function setupNavigationListeners() {
     // Story selection
     document.querySelectorAll('.story-item').forEach(storyItem => {
         storyItem.addEventListener('click', function() {
+            // Prevent viewing locked stories
+            if (this.classList.contains('locked')) {
+                showFeedback('This story is locked. Complete more levels to unlock!', 'error');
+                return;
+            }
             // All stories are clickable since they're all unlocked after completing any level
             // Get the story ID from the image alt text or a data attribute
             const storyTitle = this.querySelector('h4').textContent;
@@ -284,15 +289,21 @@ function setupAccessibilityControls() {
         });
     }
     
+    document.getElementById('game-settings-button').addEventListener('click', () => {
+        showScreen('settings');
+    });
     const simplifiedModeSetting = document.getElementById('simplified-mode-setting');
     if (simplifiedModeSetting) {
         simplifiedModeSetting.addEventListener('change', (e) => {
             console.log('Simplified mode setting changed');
             gameState.simplifiedMode = e.target.checked;
-            updateUI();
+            if (gameState.simplifiedMode) {
+                document.body.classList.add('simplified-mode');
+            } else {
+                document.body.classList.remove('simplified-mode');
+            }
         });
     }
-    
     const volumeSlider = document.getElementById('volume-slider');
     if (volumeSlider) {
         volumeSlider.addEventListener('input', (e) => {

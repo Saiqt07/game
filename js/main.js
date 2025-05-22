@@ -442,6 +442,8 @@ function showScreen(screenName) {
     // Stop any ongoing speech synthesis when changing screens
     if ('speechSynthesis' in window) {
         speechSynthesis.cancel();
+        speechQueue = [];
+        isSpeaking = false;
     }
     console.log('Showing screen:', screenName);
     
@@ -1392,7 +1394,6 @@ function speakMessage(message, interrupt = false) {
     speech.onerror = function() {
         console.error('Speech synthesis error');
         isSpeaking = false;
-        processNextSpeech();
     };
     
     // Add to queue
@@ -1755,69 +1756,7 @@ function startNewGame() {
     updateUI();
 }
 
-/**
- * Improved speech function that handles queuing and prevents delays
- * @param {string} message - The text to be spoken
- * @param {boolean} interrupt - Whether to interrupt current speech (default: false)
- */
-function speakMessage(message, interrupt = false) {
-    // Use the Web Speech API if available and enabled
-    if (!('speechSynthesis' in window) || !gameState.voiceGuidanceEnabled) {
-        return;
-    }
-    
-    // If interrupt is true, cancel all current and pending speech
-    if (interrupt) {
-        speechSynthesis.cancel();
-        speechQueue = [];
-        isSpeaking = false;
-    }
-    
-    // Create a new utterance with the message
-    const speech = new SpeechSynthesisUtterance(message);
-    speech.volume = gameState.audioEnabled ? 1 : 0;
-    speech.rate = 1.0; // Normal speed
-    speech.pitch = 1.0; // Normal pitch
-    
-    // Add onend event to process queue
-    speech.onend = function() {
-        isSpeaking = false;
-        processNextSpeech();
-    };
-    
-    // Add onerror event to handle errors and continue queue
-    speech.onerror = function() {
-        console.error('Speech synthesis error');
-        isSpeaking = false;
-        processNextSpeech();
-    };
-    
-    // Add to queue
-    speechQueue.push(speech);
-    
-    // Process queue if not currently speaking
-    if (!isSpeaking) {
-        processNextSpeech();
-    }
-}
 
-/**
- * Process the next speech in the queue
- */
-function processNextSpeech() {
-    if (speechQueue.length === 0 || isSpeaking) {
-        return;
-    }
-    
-    // Get the next speech from the queue
-    const nextSpeech = speechQueue.shift();
-    
-    // Set speaking flag
-    isSpeaking = true;
-    
-    // Speak the message
-    speechSynthesis.speak(nextSpeech);
-}
 
 function playSound(soundType) {
     console.log('Playing sound:', soundType);

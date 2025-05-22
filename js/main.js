@@ -439,6 +439,10 @@ function updateVolume(volume) {
 }
 
 function showScreen(screenName) {
+    // Stop any ongoing speech synthesis when changing screens
+    if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+    }
     console.log('Showing screen:', screenName);
     
     // Store the previous screen before changing to the new one

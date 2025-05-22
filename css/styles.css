@@ -53,6 +53,32 @@ body.high-contrast {
     --button-text: var(--hc-button-text);
 }
 
+body.dark-mode {
+    --primary-color: #222831;
+    --secondary-color: #393e46;
+    --accent-color: #ffd369;
+    --text-color: #eeeeee;
+    --background-color: #181818;
+    --button-color: #393e46;
+    --button-text: #ffd369;
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode .large-button {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode .description-card {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode #main-menu-screen {
+    background: linear-gradient(to bottom, #333, #444);
+}
+
 /* Text Size Adjustments */
 body.text-size-large {
     --base-font-size: 20px;
@@ -542,6 +568,13 @@ h3 {
 .story-item {
     cursor: pointer;
     transition: transform 0.2s;
+    display: flex;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
 }
 
 .story-item:not(.locked):hover {
@@ -550,7 +583,64 @@ h3 {
 
 .story-item.selected {
     border: 3px solid var(--accent-color);
-    background-color: rgba(var(--accent-color-rgb), 0.1);
+    background-color: rgba(255, 193, 7, 0.2);
+}
+
+.story-item.unlocked {
+    border: 2px solid #ffc107;
+    background-color: white;
+}
+
+.story-item.unlocked p {
+    color: #4caf50;
+    font-weight: 500;
+}
+
+.story-item.locked {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    position: relative;
+    opacity: 0.85;
+    filter: grayscale(70%);
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.story-item.locked:hover, .story-item.locked:focus {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0.9;
+}
+
+.story-item.locked .lock-overlay i {
+    animation: gentle-pulse 2s infinite ease-in-out;
+}
+
+@keyframes gentle-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.story-item.locked .story-info p {
+    color: #888;
+    font-style: italic;
+}
+
+/* Add unlock requirement badge */
+.story-item.locked::before {
+    content: "Locked";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    transform: rotate(-15deg);
 }
 
 #play-narration {
@@ -561,33 +651,16 @@ h3 {
     display: none;
 }
 
-.story-item {
-    display: flex;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 15px;
-    position: relative;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s;
-}
-
-.story-item:hover {
-    transform: translateY(-3px);
-}
-
-.story-item.locked {
-    opacity: 0.7;
-}
-
 .story-thumbnail {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
     border-radius: 12px;
     background: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     display: block;
     margin-right: 15px;
+    flex-shrink: 0;
 }
 
 .story-info {
@@ -597,27 +670,37 @@ h3 {
     justify-content: center;
 }
 
+.lock-overlay {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.story-item.locked:hover .lock-overlay {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
 .story-info h4 {
     color: var(--primary-color);
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     font-size: 18px;
 }
 
-.lock-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 50%;
-    color: white;
-    font-size: 16px;
-    margin: 10px;
-}
+/* Remove duplicate lock-overlay definition */
 
 .story-reader {
     background-color: white;
@@ -654,6 +737,15 @@ h3 {
 /* Settings Screen */
 #settings-screen {
     background-color: #e3f2fd;
+}
+
+.settings-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
 }
 
 .settings-options {
@@ -823,6 +915,11 @@ input:checked + .toggle-slider:before {
 
 .step-description {
     flex: 1;
+}
+
+.story-info p {
+    color: #666;
+    font-size: 16px;
 }
 
 .help-buttons {
